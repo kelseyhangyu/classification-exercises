@@ -1,44 +1,26 @@
-import acquire as a 
 import pandas as pd
 import numpy as np
 
 def prep_iris():
-    iris = a.get_iris_data()
-    iris.columns.str.replace('.','').str.lower()
     iris = iris.reset_index(drop=True)
     iris = iris.drop(['measurement_id'], axis=1)
     iris = iris.rename(columns={'species_name':'species'})
     return iris
 
 def prep_titanic():
-    titanic=a.get_titanic_data()
     titanic = titanic.drop(['class'], axis=1)
     titanic = titanic.drop(['embarked'], axis=1)
     return titanic
 
 def prep_telco():
-    telco=a.get_telco_data()
     telco= telco.drop(['payment_type_id'],axis =1)
     telco=telco.drop(['contract_type_id'],axis =1)
     telco=telco.drop(['internet_service_type_id'],axis =1)
-    telco.internet_service_type.value_counts(dropna=False)
+ # Strip leading and trailing whitespaces from the column with blank values
+    telco['total_charges'] = telco['total_charges'].str.strip()
+# Drop rows with blank values in the specified column
+    telco = telco[telco['total_charges'] != '']
     return telco
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 from sklearn.model_selection import train_test_split
@@ -59,8 +41,4 @@ def split(df,target_variable):
                 )
     
     return train, validate, test
-
-import acquire as a 
-import pandas as pd
-import numpy as np
 
