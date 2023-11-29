@@ -10,6 +10,9 @@ def prep_iris(iris):
 def prep_titanic(titanic):
     titanic = titanic.drop(['class'], axis=1)
     titanic = titanic.drop(['embarked'], axis=1)
+    titanic['age'] = titanic['age'].fillna(titanic.age.mean())
+    titanic['embark_town'] = titanic['embark_town'].fillna(titanic.embark_town.mode()[0])
+    titanic = titanic.drop(columns=['deck'])
     return titanic
 
 def prep_telco(telco):
