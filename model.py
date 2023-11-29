@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 def preprocess_titanic(train,validate,test):
     dummy_train = pd.get_dummies(train[['sex','embark_town']], dummy_na=False, drop_first=[True, True]).astype(int)
     dummy_val = pd.get_dummies(validate[['sex','embark_town']], dummy_na=False, drop_first=[True, True]).astype(int)
